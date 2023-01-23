@@ -252,7 +252,7 @@ def action_build_dashboard():
 
     load_figure_template('lumen')
     app = Dash(__name__, external_stylesheets=[dbc.themes.LUMEN, dbc.icons.FONT_AWESOME])
-    # server = app.server
+    server = app.server
 
     app.layout = dbc.Container(
         [
@@ -328,10 +328,10 @@ def action_build_dashboard():
 
         return fig_numbers, fig_subplots, fig_cont_util
 
-    return app
+    return app, server
+
 
 
 if __name__ == '__main__':
-    app = action_build_dashboard()
-    server = app.server
+    app, server = action_build_dashboard()
     app.run(debug=False)
