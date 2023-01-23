@@ -27,7 +27,7 @@ def _read_suppliers_data() -> pd.DataFrame:
     return pd.read_csv(Path(__file__).parent / 'data' / 'suppliers.csv')
 
 
-def costs_chart(sku_v: None | list, supplier_v: None | list, suppliers_df: pd.DataFrame, skus_df: pd.DataFrame):
+def costs_chart(sku_v, supplier_v, suppliers_df, skus_df):
     # Procurement, Shipment and Total cost indicators
     # layout = go.Layout(width=1200, height=200, margin={'r': 20, 't': 20, 'l': 20, 'b': 20})
     layout = go.Layout(height=100, margin={'r': 0, 't': 20, 'l': 0, 'b': 20})
