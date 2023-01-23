@@ -1,0 +1,8 @@
+SKU ID,Supplier ID,SKU Name,Supplier Name,Order Quantity,Total Cost,Container Utilization
+1,B,Jeans Pants,Bangladesh,7000,91230.0,2.92
+1,E,Jeans Pants,Egypt,7200,114510.0,3.0
+1,M,Jeans Pants,Mexico,2800,51100.0,1.17
+2,B,Jeans Jacket,Bangladesh,5500,81525.0,2.29
+2,M,Jeans Jacket,Mexico,4500,81225.0,1.88
+3,B,Cotton Shirt,Bangladesh,11500,72350.0,4.79
+3,M,Cotton Shirt,Mexico,23500,152500.0,9.79

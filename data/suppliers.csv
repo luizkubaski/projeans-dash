@@ -1,0 +1,4 @@
+Supplier ID,Supplier Name,Total SKUs Qty.,Number Containers,Partial Container Qty.,Partial Container Percentage,Container Utilization,Cost per Container,Procurement Cost,Shipping Cost,Total Cost
+B,Bangladesh,24000,10,0,0.0,1.0,10500,245105.0,105000,350105.0
+E,Egypt,7200,3,0,0.0,1.0,8350,114510.0,25050,139560.0
+M,Mexico,30800,13,2000,0.83,0.99,5500,284825.0,71500,356325.0
