@@ -245,93 +245,91 @@ def container_utilization(suppliers_df):
     return fig
 
 
-def action_build_dashboard():
-    suppliers_df = _read_suppliers_data()
-    skus_df = _read_sku_data()
-    containers_df = _read_containers_data()
+# def action_build_dashboard():
+suppliers_df = _read_suppliers_data()
+skus_df = _read_sku_data()
+containers_df = _read_containers_data()
 
-    load_figure_template('lumen')
-    app = Dash(__name__, external_stylesheets=[dbc.themes.LUMEN, dbc.icons.FONT_AWESOME])
-    server = app.server
+load_figure_template('lumen')
+app = Dash(__name__, external_stylesheets=[dbc.themes.LUMEN, dbc.icons.FONT_AWESOME])
+server = app.server
 
-    app.layout = dbc.Container(
-        [
-            dbc.Row(
-                [
-                    dbc.Col(
-                        [
-                            html.Span(
-                                [
-                                    " Projeans Businness Report ",
-                                ],
-                                className='h1',
-                                style={'textAlign': 'center', 'margin-top': '60px', 'margin_bottom': '100px', 'color': '#49565f'},
-                            )
-                        ],
-                        width={'size': 6, 'offset': 1},
-                    )
-                ],
-                justify='center',
-                className='my-2 p-4',  # check cheatsheet Utility: Spacing margin my-* for more info
-            ),
-            dbc.Row(
-                [
-                    dbc.Col([dcc.Graph(id='total_numbers', config={'displayModeBar': False})], width=12),
-                    # dbc.Col([dcc.Graph(id='total_containers', config={'displayModeBar': False})], width=2),
-                ]
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        [
-                            html.Label('SKU Name', className='px-2 mb-1 border rounded bg-transparent ', style={'color': '#49565f', 'text-color': '#49565f'}),
-                            dcc.Dropdown([x for x in sorted(skus_df['SKU Name'].unique())], multi=True, id='skus_dpdn'),
-                        ]
-                    ),
-                    dbc.Col(
-                        [
-                            html.Label('Supplier Name', className='px-2 mb-1 border rounded bg-transparent', style={'color': '#49565f', 'text-color': '#49565f'}),
-                            dcc.Dropdown(
-                                [x for x in sorted(suppliers_df['Supplier Name'].unique())], multi=True, id='suppl_dpdn'),
-                        ]
+app.layout = dbc.Container(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        html.Span(
+                            [
+                                " Projeans Businness Report ",
+                            ],
+                            className='h1',
+                            style={'textAlign': 'center', 'margin-top': '60px', 'margin_bottom': '100px', 'color': '#49565f'},
+                        )
+                    ],
+                    width={'size': 6, 'offset': 1},
+                )
+            ],
+            justify='center',
+            className='my-2 p-4',  # check cheatsheet Utility: Spacing margin my-* for more info
+        ),
+        dbc.Row(
+            [
+                dbc.Col([dcc.Graph(id='total_numbers', config={'displayModeBar': False})], width=12),
+                # dbc.Col([dcc.Graph(id='total_containers', config={'displayModeBar': False})], width=2),
+            ]
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        html.Label('SKU Name', className='px-2 mb-1 border rounded bg-transparent ', style={'color': '#49565f', 'text-color': '#49565f'}),
+                        dcc.Dropdown([x for x in sorted(skus_df['SKU Name'].unique())], multi=True, id='skus_dpdn'),
+                    ]
+                ),
+                dbc.Col(
+                    [
+                        html.Label('Supplier Name', className='px-2 mb-1 border rounded bg-transparent', style={'color': '#49565f', 'text-color': '#49565f'}),
+                        dcc.Dropdown(
+                            [x for x in sorted(suppliers_df['Supplier Name'].unique())], multi=True, id='suppl_dpdn'),
+                    ]
 
-                    ),
-                ]
-            ),
-            dbc.Row(
-                [
-                    dbc.Col([dcc.Graph(id='make_subplot', config={'displayModeBar': False})], width=9),
-                    # dbc.Col([dcc.Graph(id='sku_cost_supp', config={'displayModeBar': False})], width=5),
-                    dbc.Col([dcc.Graph(id='container_util', config={'displayModeBar': False})], width=3),
-                ]
-            ),
+                ),
+            ]
+        ),
+        dbc.Row(
+            [
+                dbc.Col([dcc.Graph(id='make_subplot', config={'displayModeBar': False})], width=9),
+                # dbc.Col([dcc.Graph(id='sku_cost_supp', config={'displayModeBar': False})], width=5),
+                dbc.Col([dcc.Graph(id='container_util', config={'displayModeBar': False})], width=3),
+            ]
+        ),
 
-            
-        ]
-    )
+        
+    ]
+)
 
-    @callback(
-        Output('total_numbers', 'figure'),
-        # Output('total_containers', 'figure'),
-        Output('make_subplot', 'figure'),
-        # Output('sku_cost_supp', 'figure'),
-        Output('container_util', 'figure'),
-        # Output('tot_cost_supp', 'figure'),
-        Input('skus_dpdn', 'value'),
-        Input('suppl_dpdn', 'value'),
-    )
-    def update_graphs(sku_v, supplier_v):
+@callback(
+    Output('total_numbers', 'figure'),
+    # Output('total_containers', 'figure'),
+    Output('make_subplot', 'figure'),
+    # Output('sku_cost_supp', 'figure'),
+    Output('container_util', 'figure'),
+    # Output('tot_cost_supp', 'figure'),
+    Input('skus_dpdn', 'value'),
+    Input('suppl_dpdn', 'value'),
+)
+def update_graphs(sku_v, supplier_v):
 
-        fig_numbers = costs_chart(sku_v, supplier_v, suppliers_df, skus_df)
-        fig_subplots = make_subplot(sku_v, supplier_v, skus_df)
-        fig_cont_util = container_utilization(suppliers_df)
+    fig_numbers = costs_chart(sku_v, supplier_v, suppliers_df, skus_df)
+    fig_subplots = make_subplot(sku_v, supplier_v, skus_df)
+    fig_cont_util = container_utilization(suppliers_df)
 
-        return fig_numbers, fig_subplots, fig_cont_util
+    return fig_numbers, fig_subplots, fig_cont_util
 
-    return app, server
 
 
 
 if __name__ == '__main__':
-    app, server = action_build_dashboard()
     app.run(debug=False)
